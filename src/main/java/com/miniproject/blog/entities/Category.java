@@ -1,6 +1,5 @@
 package com.miniproject.blog.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,24 +11,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="users")
-public class User {
-
+@Table(name="categories")
+public class Category {
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(name="user_name", nullable=false)
-	private String name;
-	
-	private String email;
-	
-	private String password;
-	
-	private String about;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer categoryId;
 
-	
+    private String categoryTitle;
+
+    private String categoryDescription;
+    
 }
