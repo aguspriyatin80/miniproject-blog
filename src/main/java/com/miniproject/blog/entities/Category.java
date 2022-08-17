@@ -1,5 +1,6 @@
 package com.miniproject.blog.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer categoryId;
 
-    private String categoryTitle;
+    @Column(nullable=false)
+	private String categoryTitle;
 
     private String categoryDescription;
     
