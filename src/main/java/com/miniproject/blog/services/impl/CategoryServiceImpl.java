@@ -30,8 +30,6 @@ public class CategoryServiceImpl implements CategoryService{
         return this.modelMapper.map(addedCategory, CategoryDTO.class);
     }
 
-
-
 	@Override
 	public List<CategoryDTO> getCategories() {		
 		List<Category> categories = this.categoryRepo.findAll();
