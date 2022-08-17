@@ -1,5 +1,7 @@
 package com.miniproject.blog.payloads;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +9,7 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Data
-public class CategoryDTO {
+public class CategoryDTO implements Serializable{
 	
 	private Integer categoryId;
 
