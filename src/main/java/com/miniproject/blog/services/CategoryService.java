@@ -9,6 +9,9 @@ public interface CategoryService {
 	//create
 	CategoryDTO createCategory(CategoryDTO categoryDTO);
 	
-	//get all
+	//get categories
     List<CategoryDTO> getCategories();
+    
+    // get one category
+    CategoryDTO getCategory(Integer categoryId);
 }

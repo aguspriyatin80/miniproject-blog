@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.miniproject.blog.entities.Category;
+import com.miniproject.blog.exceptions.ResourceNotFoundException;
 import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.services.CategoryService;
@@ -35,5 +36,13 @@ public class CategoryServiceImpl implements CategoryService{
 		List<Category> categories = this.categoryRepo.findAll();
 		List<CategoryDTO> categoryDtos = categories.stream().map((cat)->this.modelMapper.map(cat, CategoryDTO.class)).collect(Collectors.toList());
 		return categoryDtos;
+	}
+
+	@Override
+	public CategoryDTO getCategory(Integer categoryId) {
+		Category category = this.categoryRepo.findById(categoryId)
+				.orElseThrow(()-> new ResourceNotFoundException("Category", "Category Id", categoryId));
+		return this.modelMapper.map(category, CategoryDTO.class);
+
 	}
 }
