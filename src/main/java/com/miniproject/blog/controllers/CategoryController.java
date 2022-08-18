@@ -45,7 +45,7 @@ public class CategoryController {
 	//get all
 	@GetMapping("/categories")
 	private ResponseEntity<List<CategoryDTO>> getCategories(
-			@RequestParam(value="pageNumber", defaultValue="1", required=false) int pageNumber,
+			@RequestParam(value="pageNumber", defaultValue="0", required=false) int pageNumber,
 			@RequestParam(value="pageSize", defaultValue="5", required=false) int pageSize)
 	{
 		List<CategoryDTO> categories = this.categoryService.getCategories(pageNumber,pageSize);
