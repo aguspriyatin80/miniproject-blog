@@ -1,6 +1,8 @@
 package com.miniproject.blog.services.impl;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.miniproject.blog.entities.Post;
 import com.miniproject.blog.entities.User;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
 import com.miniproject.blog.payloads.PostDTO;
+import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.repositories.PostRepo;
 import com.miniproject.blog.repositories.UserRepo;
@@ -48,6 +51,22 @@ public class PostServiceImpl implements PostService{
 		
 		return this.modelMapper.map(newPost, PostDTO.class);
 		
+	}
+
+	@Override
+	public List<PostDTO> getPostsByCategory(Integer categoryId) {
+		Category category = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "Category Id", categoryId));
+		List<Post> posts = this.postRepo.findByCategory(category); 				
+		List<PostDTO> postDtos = posts.stream().map((post)->this.modelMapper.map(post,PostDTO.class)).collect(Collectors.toList());
+		return postDtos;
+	}
+
+	@Override
+	public List<PostDTO> getPostsByUser(Integer userId) {
+		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));
+		List<Post> posts = this.postRepo.findByUser(user);
+		List<PostDTO> postDtos = posts.stream().map((post)->this.modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
+		return postDtos;
 	}
 
 }
