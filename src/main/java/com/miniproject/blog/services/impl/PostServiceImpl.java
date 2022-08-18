@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.miniproject.blog.entities.Category;
@@ -66,6 +68,13 @@ public class PostServiceImpl implements PostService{
 		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));
 		List<Post> posts = this.postRepo.findByUser(user);
 		List<PostDTO> postDtos = posts.stream().map((post)->this.modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
+		return postDtos;
+	}
+
+	@Override
+	public List<PostDTO> getAllPosts() {
+		List<Post> allPosts = this.postRepo.findAll();
+		List<PostDTO> postDtos = allPosts.stream().map((post)-> this.modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
 		return postDtos;
 	}
 

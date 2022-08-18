@@ -14,4 +14,7 @@ public interface PostService {
 	
 	// get all posts by user
 	List<PostDTO> getPostsByUser(Integer categoryId);
+	
+	// get all posts
+	List<PostDTO> getAllPosts();
 }

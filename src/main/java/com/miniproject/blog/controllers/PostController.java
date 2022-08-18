@@ -40,4 +40,10 @@ public class PostController {
 		List<PostDTO> postsByCategory = this.postService.getPostsByCategory(id);
 		return new ResponseEntity<List<PostDTO>>(postsByCategory, HttpStatus.OK);
 	}
+	
+	@GetMapping("/posts")
+	public ResponseEntity<List<PostDTO>> getAllPosts(){
+		List<PostDTO> allPosts = this.postService.getAllPosts();
+		return new ResponseEntity<List<PostDTO>>(allPosts,HttpStatus.OK);
+	}
 }
