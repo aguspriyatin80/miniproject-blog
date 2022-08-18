@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.miniproject.blog.config.AppConstants;
 import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.ErrorResponse;
 import com.miniproject.blog.payloads.SearchDTO;
@@ -44,8 +45,8 @@ public class CategoryController {
 	//get all
 	@GetMapping("/categories")
 	private ResponseEntity<List<CategoryDTO>> getCategories(
-			@RequestParam(value="pageNumber", defaultValue="0", required=false) int pageNumber,
-			@RequestParam(value="pageSize", defaultValue="5", required=false) int pageSize)
+			@RequestParam(value="pageNumber", defaultValue=AppConstants.PAGE_NUMBER, required=false) int pageNumber,
+			@RequestParam(value="pageSize", defaultValue=AppConstants.PAGE_SIZE, required=false) int pageSize)
 	{
 		List<CategoryDTO> categories = this.categoryService.getCategories(pageNumber,pageSize);
 		return ResponseEntity.ok(categories);
