@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
 import com.miniproject.blog.payloads.CategoryDTO;
+import com.miniproject.blog.payloads.SearchDTO;
 import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.services.CategoryService;
 
@@ -45,4 +46,20 @@ public class CategoryServiceImpl implements CategoryService{
 		return this.modelMapper.map(category, CategoryDTO.class);
 
 	}
+
+	@Override
+	public CategoryDTO updateCategory(CategoryDTO categoryDTO, Integer categoryId) {
+		Category category = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "Category Id", categoryId));
+		this.modelMapper.map(categoryDTO, category);
+		Category updatedCategory = this.categoryRepo.save(category);
+		return this.modelMapper.map(updatedCategory, CategoryDTO.class);
+	}
+
+	@Override
+	public void deleteCategory(Integer categoryId) {
+		Category category = this.categoryRepo.findById(categoryId)
+				.orElseThrow(()-> new ResourceNotFoundException("Category", "Category Id", categoryId));
+		this.categoryRepo.delete(category);
+	}
+
 }

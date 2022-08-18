@@ -1,5 +1,8 @@
 package com.miniproject.blog.services.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,31 @@ public class UserServiceImpl implements UserService {
 		User user = this.modelMapper.map(userDTO, User.class);
         User addedUser = this.userRepo.save(user);
         return this.modelMapper.map(addedUser, UserDTO.class);
+	}
+
+	@Override
+	public List<UserDTO> getUsers() {
+		List<User> users = this.userRepo.findAll();
+		List<UserDTO> userDtos = users.stream().map((u)->this.modelMapper.map(u, UserDTO.class)).collect(Collectors.toList());
+		return userDtos;
+	}
+
+	@Override
+	public UserDTO getUser(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDTO updateUser(UserDTO UserDTO, Integer UserId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUser(Integer UserId) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

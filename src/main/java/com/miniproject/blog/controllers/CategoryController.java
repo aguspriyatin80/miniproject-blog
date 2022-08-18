@@ -7,15 +7,20 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.ErrorResponse;
+import com.miniproject.blog.payloads.SearchDTO;
+import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.services.impl.CategoryServiceImpl;
 
 @RestController
@@ -24,6 +29,9 @@ public class CategoryController {
 
 	@Autowired
     CategoryServiceImpl categoryService;
+	
+	@Autowired
+	CategoryRepo categoryRepo;
 
     //create	
 	@PostMapping("/categories")
@@ -46,4 +54,30 @@ public class CategoryController {
 		CategoryDTO categoryDto = this.categoryService.getCategory(id);
 		return new ResponseEntity<CategoryDTO>(categoryDto,HttpStatus.OK);
 	}
+	
+	// update category
+	@PutMapping("/categories/{categoryId}")
+	public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable("categoryId") Integer id){
+		CategoryDTO updatedCategory = this.categoryService.updateCategory(categoryDTO, id);
+		return new ResponseEntity<CategoryDTO>(updatedCategory,HttpStatus.OK);
+	}
+	
+	// delete
+	@DeleteMapping("/categories/{categoryId}")
+	public ResponseEntity<ErrorResponse> deleteCategory(@Valid @PathVariable("categoryId") Integer id) {
+		this.categoryService.deleteCategory(id);
+		return new ResponseEntity<ErrorResponse>(new ErrorResponse("category with id = " + id + " deleted succesfully", true), HttpStatus.OK);
+	}
+	
+	// search category by name
+	@PostMapping("/categories/search/name")
+	public ResponseEntity<?> findCategoryByNameIgnoreCase(@RequestBody SearchDTO searchDto) {
+		List<Category> searchCategory = this.categoryRepo.findCategoryByNameLike(searchDto.getKeyword());
+		if(searchCategory.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
+		}
+		return new ResponseEntity<>(searchCategory, HttpStatus.OK);
+		
+	}
+	
 }
