@@ -27,6 +27,8 @@ public class ErrorResponse {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+	public ErrorResponse() {
+	}
 	
 	
 }

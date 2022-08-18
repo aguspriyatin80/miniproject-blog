@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.miniproject.blog.entities.Category;
@@ -33,8 +36,14 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
 	@Override
-	public List<CategoryDTO> getCategories() {		
-		List<Category> categories = this.categoryRepo.findAll();
+	public List<CategoryDTO> getCategories(int pageNumber, int pageSize) {
+		
+		Pageable p = PageRequest.of(pageNumber, pageSize);
+		
+		Page<Category> pageCategories = this.categoryRepo.findAll(p);
+		
+		List<Category> categories = pageCategories.getContent();
+		
 		List<CategoryDTO> categoryDtos = categories.stream().map((cat)->this.modelMapper.map(cat, CategoryDTO.class)).collect(Collectors.toList());
 		return categoryDtos;
 	}

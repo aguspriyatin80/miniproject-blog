@@ -2,6 +2,7 @@ package com.miniproject.blog.payloads;
 
 import java.util.Date;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,11 +23,6 @@ public class PostDTO {
 	
 	private UserDTO user;
 
-	public PostDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
 	public PostDTO(Integer postId, String title, String content, String imageName, Date addedDate, CategoryDTO category,
 			UserDTO user) {
 		super();
@@ -39,6 +35,10 @@ public class PostDTO {
 		this.user = user;
 	}
 
+	public PostDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Integer getPostId() {
 		return postId;
@@ -95,6 +95,6 @@ public class PostDTO {
 	public void setUser(UserDTO user) {
 		this.user = user;
 	}
-	
+
 	
 }

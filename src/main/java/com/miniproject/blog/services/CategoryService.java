@@ -13,7 +13,7 @@ public interface CategoryService {
 	CategoryDTO createCategory(CategoryDTO categoryDTO);
 	
 	//get categories
-    List<CategoryDTO> getCategories();
+    List<CategoryDTO> getCategories(int pageNumber, int pageSize);
     
     // get one category
     CategoryDTO getCategory(Integer categoryId);

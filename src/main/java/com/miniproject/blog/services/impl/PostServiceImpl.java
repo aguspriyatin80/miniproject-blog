@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import com.miniproject.blog.entities.Post;
 import com.miniproject.blog.entities.User;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
 import com.miniproject.blog.payloads.PostDTO;
+import com.miniproject.blog.payloads.PostResponse;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.repositories.PostRepo;
@@ -73,10 +77,25 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public List<PostDTO> getAllPosts() {
-		List<Post> allPosts = this.postRepo.findAll();
+	public PostResponse getAllPosts(Integer pageNumber, Integer pageSize) {			
+
+		Pageable p = PageRequest.of(pageNumber, pageSize);
+		
+		Page<Post> pagePost = this.postRepo.findAll(p);
+		
+		List<Post> allPosts = pagePost.getContent();
+		
 		List<PostDTO> postDtos = allPosts.stream().map((post)-> this.modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
-		return postDtos;
+		
+		PostResponse postResponse = new PostResponse();
+		postResponse.setContent(postDtos);
+		postResponse.setPageNumber(pagePost.getNumber());
+		postResponse.setPageSize(pagePost.getSize());
+		postResponse.setTotalElements(pagePost.getTotalElements());
+		postResponse.setTotalPages(pagePost.getTotalPages());
+		postResponse.setLastPage(pagePost.isLast());
+		
+		return postResponse;
 	}
 
 	@Override
@@ -90,6 +109,16 @@ public class PostServiceImpl implements PostService{
 		// TODO Auto-generated method stub
 		Post post = this.postRepo.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Post Id", postId));
 		this.postRepo.delete(post);
+	}
+
+	@Override
+	public PostDTO updatePost(PostDTO postDto, Integer postId) {
+		Post post = this.postRepo.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post", "Post Id", postId));
+//		this.modelMapper.map(postDto, post);
+		post.setTitle(postDto.getTitle());
+		post.setContent(postDto.getContent());
+		Post updatedPost = this.postRepo.save(post);
+		return this.modelMapper.map(updatedPost, PostDTO.class);
 	}
 
 }

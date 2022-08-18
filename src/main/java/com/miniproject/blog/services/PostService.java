@@ -2,7 +2,9 @@ package com.miniproject.blog.services;
 
 import java.util.List;
 
+import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.PostDTO;
+import com.miniproject.blog.payloads.PostResponse;
 
 public interface PostService {
 	//create
@@ -16,9 +18,13 @@ public interface PostService {
 	List<PostDTO> getPostsByUser(Integer categoryId);
 	
 	// get all posts
-	List<PostDTO> getAllPosts();
+	PostResponse getAllPosts(Integer pageNumber, Integer pageSize);
 	
+	// get post by id
 	PostDTO getPost(Integer postId);
 	
+	// delete post by id
 	void deletePost(Integer postId);
+	
+	PostDTO updatePost(PostDTO postDTO, Integer postId);
 }
