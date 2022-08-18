@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.miniproject.blog.entities.Post;
 import com.miniproject.blog.payloads.PostDTO;
 import com.miniproject.blog.services.PostService;
 
@@ -45,5 +46,11 @@ public class PostController {
 	public ResponseEntity<List<PostDTO>> getAllPosts(){
 		List<PostDTO> allPosts = this.postService.getAllPosts();
 		return new ResponseEntity<List<PostDTO>>(allPosts,HttpStatus.OK);
+	}
+	
+	@GetMapping("/posts/{postId}")
+	public ResponseEntity<PostDTO> getPostById(@PathVariable Integer postId){		
+		PostDTO postDto = this.postService.getPost(postId);
+		return new ResponseEntity<PostDTO>(postDto,HttpStatus.OK);
 	}
 }

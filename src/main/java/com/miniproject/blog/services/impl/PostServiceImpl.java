@@ -2,6 +2,7 @@ package com.miniproject.blog.services.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -76,6 +77,12 @@ public class PostServiceImpl implements PostService{
 		List<Post> allPosts = this.postRepo.findAll();
 		List<PostDTO> postDtos = allPosts.stream().map((post)-> this.modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
 		return postDtos;
+	}
+
+	@Override
+	public PostDTO getPost(Integer postId) {
+		Optional<Post> post = this.postRepo.findById(postId);
+		return this.modelMapper.map(post, PostDTO.class);
 	}
 
 }

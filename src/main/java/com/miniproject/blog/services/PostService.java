@@ -17,4 +17,6 @@ public interface PostService {
 	
 	// get all posts
 	List<PostDTO> getAllPosts();
+	
+	PostDTO getPost(Integer postId);
 }

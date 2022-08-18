@@ -8,6 +8,8 @@ import lombok.Setter;
 
 public class PostDTO {
 
+	private Integer postId;
+	
 	private String title;
 	
 	private String content;
@@ -24,15 +26,26 @@ public class PostDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public PostDTO(String title, String content, String imageName, Date addedDate, CategoryDTO category, UserDTO user) {
+	
+	public PostDTO(Integer postId, String title, String content, String imageName, Date addedDate, CategoryDTO category,
+			UserDTO user) {
 		super();
+		this.postId = postId;
 		this.title = title;
 		this.content = content;
 		this.imageName = imageName;
 		this.addedDate = addedDate;
 		this.category = category;
 		this.user = user;
+	}
+
+
+	public Integer getPostId() {
+		return postId;
+	}
+
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 
 	public String getTitle() {
