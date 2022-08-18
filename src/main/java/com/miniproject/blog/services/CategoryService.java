@@ -2,11 +2,8 @@ package com.miniproject.blog.services;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
 
-import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.payloads.CategoryDTO;
-import com.miniproject.blog.payloads.SearchDTO;
 
 public interface CategoryService {
 	//create
@@ -25,6 +22,9 @@ public interface CategoryService {
     void deleteCategory(Integer categoryId);
     
         	
+    // search
+    
+    List<CategoryDTO> searchPosts(String keyword);
 	
     
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.ErrorResponse;
 import com.miniproject.blog.payloads.SearchDTO;
@@ -75,13 +74,9 @@ public class CategoryController {
 	
 	// search category by name
 	@PostMapping("/categories/search/name")
-	public ResponseEntity<?> findCategoryByNameIgnoreCase(@RequestBody SearchDTO searchDto) {
-		List<Category> searchCategory = this.categoryRepo.findCategoryByNameLike(searchDto.getKeyword());
-		if(searchCategory.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
-		}
-		return new ResponseEntity<>(searchCategory, HttpStatus.OK);
-		
+	public ResponseEntity<List<CategoryDTO>> searchPostsByTitle(@RequestBody SearchDTO searchDto, String keywords){
+		List<CategoryDTO> result = this.categoryService.searchPosts(searchDto.getKeyword());
+		return new ResponseEntity<List<CategoryDTO>>(result,HttpStatus.OK);
 	}
 	
 }

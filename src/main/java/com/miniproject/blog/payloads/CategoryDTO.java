@@ -1,14 +1,11 @@
 package com.miniproject.blog.payloads;
 
-import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @Data

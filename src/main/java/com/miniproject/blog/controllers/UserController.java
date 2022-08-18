@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.ErrorResponse;
 import com.miniproject.blog.payloads.UserDTO;
-import com.miniproject.blog.services.UserService;
 import com.miniproject.blog.services.impl.UserServiceImpl;
 
 @RestController

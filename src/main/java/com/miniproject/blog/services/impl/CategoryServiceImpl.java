@@ -1,6 +1,5 @@
 package com.miniproject.blog.services.impl;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
 import com.miniproject.blog.payloads.CategoryDTO;
-import com.miniproject.blog.payloads.SearchDTO;
 import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.services.CategoryService;
 
@@ -69,6 +67,14 @@ public class CategoryServiceImpl implements CategoryService{
 		Category category = this.categoryRepo.findById(categoryId)
 				.orElseThrow(()-> new ResourceNotFoundException("Category", "Category Id", categoryId));
 		this.categoryRepo.delete(category);
+	}
+
+	@Override
+	public List<CategoryDTO> searchPosts(String keyword) {
+//		List<Category> categories = this.categoryRepo.findByCategoryTitleIgnoreCaseContaining(keyword);
+		List<Category> categories = this.categoryRepo.findCategoryByNameLike("%" + keyword + "%");
+		List<CategoryDTO>  categoryDtos = categories.stream().map((cat)-> this.modelMapper.map(cat, CategoryDTO.class)).collect(Collectors.toList());
+		return categoryDtos;
 	}
 
 }
