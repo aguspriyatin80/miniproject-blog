@@ -37,8 +37,8 @@ public class PostController {
 	
 	@GetMapping("/users/{userId}/posts")
 	public ResponseEntity<PostResponse> getPostsByUser(@PathVariable("userId") Integer id,
-			@RequestParam(value="pageNumber", defaultValue="0", required=false) int pageNumber,
-			@RequestParam(value="pageSize", defaultValue="5", required=false) int pageSize)
+		@RequestParam(value="pageNumber", defaultValue="0", required=false) int pageNumber,
+		@RequestParam(value="pageSize", defaultValue="5", required=false) int pageSize)		
 	{
 		PostResponse postsByUser = this.postService.getPostsByUser(id, pageNumber, pageSize);
 		return new ResponseEntity<PostResponse>(postsByUser, HttpStatus.OK);
@@ -53,9 +53,12 @@ public class PostController {
 	@GetMapping("/posts")
 	public ResponseEntity<PostResponse> getAllPosts(
 		@RequestParam(value="pageNumber", defaultValue="0", required=false) Integer pageNumber,
-		@RequestParam(value="pageSize", defaultValue="5", required=false) Integer pageSize)
+		@RequestParam(value="pageSize", defaultValue="5", required=false) Integer pageSize,
+		@RequestParam(value="sortBy", defaultValue="postId", required=false) String sortBy,
+		@RequestParam(value="sortDir", defaultValue="asc", required=false) String sortDir)
+
 	{
-		PostResponse postResponse = this.postService.getAllPosts(pageNumber, pageSize);
+		PostResponse postResponse = this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDir);
 		return new ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
 	}
 	
