@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.entities.User;
+import com.miniproject.blog.exceptions.ResourceNotFoundException;
 import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.UserRepo;
@@ -39,20 +40,24 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO getUser(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = this.userRepo.findById(userId)
+				.orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));
+		return this.modelMapper.map(user, UserDTO.class);
 	}
 
 	@Override
-	public UserDTO updateUser(UserDTO UserDTO, Integer UserId) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDTO updateUser(UserDTO userDTO, Integer userId) {
+		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));
+		this.modelMapper.map(userDTO, user);
+		User updatedUser = this.userRepo.save(user);
+		return this.modelMapper.map(updatedUser, UserDTO.class);
 	}
 
 	@Override
-	public void deleteUser(Integer UserId) {
-		// TODO Auto-generated method stub
-		
+	public void deleteUser(Integer userId) {
+		User user = this.userRepo.findById(userId)
+				.orElseThrow(()->new ResourceNotFoundException("User", "User Id", userId));
+		this.userRepo.delete(user);
 	}
 	
 }
