@@ -2,7 +2,6 @@ package com.miniproject.blog.services.impl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -11,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.miniproject.blog.entities.Category;
@@ -21,7 +18,6 @@ import com.miniproject.blog.entities.User;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
 import com.miniproject.blog.payloads.PostDTO;
 import com.miniproject.blog.payloads.PostResponse;
-import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.repositories.PostRepo;
 import com.miniproject.blog.repositories.UserRepo;
@@ -71,8 +67,7 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	public PostResponse getPostsByUser(Integer userId, Integer pageNumber, Integer pageSize) {
-		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));
-		
+//		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));		
 //		List<Post> posts = this.postRepo.findByUser(user);
 		
 		Pageable p = PageRequest.of(pageNumber, pageSize);

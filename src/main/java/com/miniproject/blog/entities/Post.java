@@ -1,7 +1,10 @@
 package com.miniproject.blog.entities;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -35,9 +39,12 @@ public class Post {
 	
 	@ManyToOne
 	private User user;
+	
+	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
+	private Set<Comment> comments = new HashSet<>();
 
 	public Post(Integer postId, String title, String content, String imageName, Date addedDate, Category category,
-			User user) {
+			User user, Set<Comment> comments) {
 		super();
 		this.postId = postId;
 		this.title = title;
@@ -46,9 +53,12 @@ public class Post {
 		this.addedDate = addedDate;
 		this.category = category;
 		this.user = user;
+		this.comments = comments;
 	}
 
 	public Post() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getPostId() {
@@ -105,6 +115,14 @@ public class Post {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 
 	

@@ -1,6 +1,8 @@
 package com.miniproject.blog.payloads;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PostDTO {
 
@@ -17,9 +19,11 @@ public class PostDTO {
 	private CategoryDTO category;
 	
 	private UserDTO user;
+	
+	private Set<CommentDTO> comments = new HashSet<>();
 
 	public PostDTO(Integer postId, String title, String content, String imageName, Date addedDate, CategoryDTO category,
-			UserDTO user) {
+			UserDTO user, Set<CommentDTO> comments) {
 		super();
 		this.postId = postId;
 		this.title = title;
@@ -28,6 +32,7 @@ public class PostDTO {
 		this.addedDate = addedDate;
 		this.category = category;
 		this.user = user;
+		this.comments = comments;
 	}
 
 	public PostDTO() {
@@ -89,6 +94,14 @@ public class PostDTO {
 
 	public void setUser(UserDTO user) {
 		this.user = user;
+	}
+
+	public Set<CommentDTO> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<CommentDTO> comments) {
+		this.comments = comments;
 	}
 
 	

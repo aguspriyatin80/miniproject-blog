@@ -7,10 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.entities.User;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
-import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.UserRepo;
 import com.miniproject.blog.services.UserService;

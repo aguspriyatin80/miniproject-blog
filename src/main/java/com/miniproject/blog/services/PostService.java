@@ -2,7 +2,6 @@ package com.miniproject.blog.services;
 
 import java.util.List;
 
-import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.PostDTO;
 import com.miniproject.blog.payloads.PostResponse;
 
