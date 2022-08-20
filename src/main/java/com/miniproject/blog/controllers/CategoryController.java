@@ -24,6 +24,8 @@ import com.miniproject.blog.payloads.SearchDTO;
 import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.services.impl.CategoryServiceImpl;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/api/v1")
 public class CategoryController {

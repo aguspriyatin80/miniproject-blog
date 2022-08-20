@@ -32,16 +32,6 @@ public class CustomUserDetailService implements UserDetailsService{
 		
 		return user;
 		
-//		List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
-//		User user = this.userRepo.findByEmail(username).orElseThrow(()->new ResourceNotFoundException("User", "email"+username, 0));
-//
-//	    List<String> listRoles = new ArrayList<>();
-//
-//	    user.getRoles().forEach(role->listRoles.add(role.getName()));// get role from database - usa il tuo modo **
-//
-//	    grantedAuthorityList = listRoles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-//
-//	    return user;
 	}
 
 }

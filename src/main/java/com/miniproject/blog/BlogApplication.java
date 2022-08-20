@@ -14,6 +14,12 @@ import com.miniproject.blog.config.AppConstants;
 import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.repositories.RoleRepo;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+
 @SpringBootApplication
 public class BlogApplication implements CommandLineRunner{
 
@@ -38,11 +44,11 @@ public class BlogApplication implements CommandLineRunner{
 		try {
 			Role role1 = new Role();
 			role1.setId(AppConstants.ADMIN_USER);
-			role1.setName("ADMIN_USER");
+			role1.setName("ROLE_ADMIN");
 			
 			Role role2 = new Role();
 			role2.setId(AppConstants.NORMAL_USER);
-			role2.setName("NORMAL_USER");
+			role2.setName("ROLE_NORMAL");
 			
 			List<Role> roles = List.of(role1,role2);
 			List<Role> result = this.roleRepo.saveAll(roles);
