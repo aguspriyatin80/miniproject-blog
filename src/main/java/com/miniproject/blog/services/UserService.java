@@ -8,6 +8,10 @@ import com.miniproject.blog.payloads.UserDTO;
 
 public interface UserService {
 
+	// register
+	UserDTO registerNewUser(UserDTO userDTO);
+	
+	
 	// create user
 	UserDTO createUser(UserDTO userDTO);
 	

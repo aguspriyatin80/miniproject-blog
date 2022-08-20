@@ -1,9 +1,14 @@
 package com.miniproject.blog.payloads;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.miniproject.blog.entities.Role;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +27,8 @@ public class UserDTO {
 	private String password;
 	
 	private String about;
+	
+	private Set<RoleDto> roles = new HashSet<>();
 
 	public int getId() {
 		return id;
@@ -63,19 +70,28 @@ public class UserDTO {
 		this.about = about;
 	}
 
-	public UserDTO(int id, @NotBlank String name, @Email String email, @NotNull String password, String about) {
+	public Set<RoleDto> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RoleDto> roles) {
+		this.roles = roles;
+	}
+
+	public UserDTO() {
+		super();
+	}
+
+	public UserDTO(int id, @NotBlank String name, @Email String email, @NotNull String password, String about,
+			Set<RoleDto> roles) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.about = about;
+		this.roles = roles;
 	}
-
-	public UserDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
+		
 	
 }
