@@ -2,6 +2,8 @@ package com.miniproject.blog.services;
 
 import java.util.List;
 
+import org.springframework.security.access.annotation.Secured;
+
 import com.miniproject.blog.payloads.UserDTO;
 
 public interface UserService {
@@ -10,6 +12,7 @@ public interface UserService {
 	UserDTO createUser(UserDTO userDTO);
 	
 	//get users
+	
     List<UserDTO> getUsers();
     
     // get one user

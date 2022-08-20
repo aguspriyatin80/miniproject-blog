@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,26 +43,28 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(createdUser,HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/users")
-	private ResponseEntity<List<UserDTO>> getUsers(){
+	@GetMapping("/users")	 
+	ResponseEntity<List<UserDTO>> getUsers(){
 		List<UserDTO> users = this.userService.getUsers();
 		return ResponseEntity.ok(users);
 	}
 	
 	@GetMapping("/users/{userId}")
-	private ResponseEntity<UserDTO> getUser(@PathVariable("userId") Integer id){
+	public ResponseEntity<UserDTO> getUser(@PathVariable("userId") Integer id){
 		UserDTO userDto = this.userService.getUser(id);		
 		return new ResponseEntity<UserDTO>(userDto,HttpStatus.OK);
 	}
 	
 	@PutMapping("/users/{userId}")
-	private ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDto, @PathVariable("userId") Integer id){
+	@PreAuthorize("hasRole('NORMAL') or hasRole('ADMIN')")
+	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDto, @PathVariable("userId") Integer id){
 		UserDTO updatedUser = this.userService.updateUser(userDto,id);
 		return new ResponseEntity<UserDTO>(updatedUser,HttpStatus.OK);
 	}
-	
+		
 	@DeleteMapping("/users/{userId}")
-	private ResponseEntity<ErrorResponse> deleteUser(@PathVariable("userId") Integer id){
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<ErrorResponse> deleteUser(@PathVariable("userId") Integer id){
 		this.userService.deleteUser(id);	
 		return new ResponseEntity<ErrorResponse>(new ErrorResponse("user with id = " + id + " deleted succesfully", true), HttpStatus.OK);
 	}
