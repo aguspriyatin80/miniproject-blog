@@ -31,9 +31,6 @@ public class CategoryController {
 	@Autowired
     CategoryServiceImpl categoryService;
 	
-	@Autowired
-	CategoryRepo categoryRepo;
-
     //create	
 	@PostMapping("/categories")
 	private ResponseEntity<CategoryDTO> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO){
