@@ -70,9 +70,22 @@ public class UserServiceImpl implements UserService {
 		this.userRepo.delete(user);
 	}
 
+//	@Override
+//	public UserDTO registerNewUser(UserDTO userDto) {
+//		User user = this.modelMapper.map(userDto, User.class);
+//		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+//		
+//		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+//		
+//		user.getRoles().add(role);
+//		User newUser = this.userRepo.save(user);
+//		
+//		return this.modelMapper.map(newUser, UserDTO.class);
+//	}
+	
 	@Override
-	public UserDTO registerNewUser(UserDTO userDto) {
-		User user = this.modelMapper.map(userDto, User.class);
+	public UserDTO registerNewUser(RegisterRequest req) {
+		User user = this.modelMapper.map(req, User.class);
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 		
 		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
