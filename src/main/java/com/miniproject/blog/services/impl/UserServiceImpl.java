@@ -13,6 +13,7 @@ import com.miniproject.blog.config.AppConstants;
 import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.entities.User;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
+import com.miniproject.blog.payloads.RegisterRequest;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.RoleRepo;
 import com.miniproject.blog.repositories.UserRepo;
@@ -70,8 +71,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO registerNewUser(UserDTO userDTO) {
-		User user = this.modelMapper.map(userDTO, User.class);
+	public UserDTO registerNewUser(RegisterRequest registerRequest) {
+		User user = this.modelMapper.map(registerRequest, User.class);
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 		
 		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
@@ -81,5 +82,6 @@ public class UserServiceImpl implements UserService {
 		
 		return this.modelMapper.map(newUser, UserDTO.class);
 	}
+
 	
 }

@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.security.access.annotation.Secured;
 
+import com.miniproject.blog.payloads.RegisterRequest;
 import com.miniproject.blog.payloads.UserDTO;
 
 public interface UserService {
 
 	// register
-	UserDTO registerNewUser(UserDTO userDTO);
+	UserDTO registerNewUser(RegisterRequest registerRequest);
 	
 	
 	// create user
