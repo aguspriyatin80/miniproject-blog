@@ -1,7 +1,6 @@
 package com.miniproject.blog.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.miniproject.blog.entities.User;
 import com.miniproject.blog.payloads.ErrorResponse;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.UserRepo;
@@ -27,12 +25,10 @@ import com.miniproject.blog.services.impl.UserServiceImpl;
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
-
 	
 	@Autowired
 	UserServiceImpl userService;
-	
-	
+		
 	@Autowired
 	UserRepo userRepo;
 	

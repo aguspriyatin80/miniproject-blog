@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.miniproject.blog.exceptions.ApiException;
-import com.miniproject.blog.payloads.ErrorResponse;
 import com.miniproject.blog.payloads.JwtAuthRequest;
-import com.miniproject.blog.payloads.RegisterRequest;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.security.JwtAuthResponse;
 import com.miniproject.blog.security.JwtTokenHelper;

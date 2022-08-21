@@ -4,9 +4,6 @@ package com.miniproject.blog.payloads;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 public class CategoryDTO{
 	
 	private Integer categoryId;

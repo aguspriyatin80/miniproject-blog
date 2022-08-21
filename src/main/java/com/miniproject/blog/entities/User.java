@@ -19,14 +19,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "\"User\"")
@@ -57,8 +53,7 @@ public class User implements UserDetails{
             )
 	private Set<Role> roles = new HashSet<>();
 //	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id"))	
-    
+//	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id"))	    
 
 	public User(Integer id, String name, String email, String password, String about, List<Post> posts,
 			Set<Role> roles) {

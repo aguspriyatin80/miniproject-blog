@@ -3,15 +3,9 @@ package com.miniproject.blog.payloads;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.miniproject.blog.entities.Role;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 public class UserDTO {
 

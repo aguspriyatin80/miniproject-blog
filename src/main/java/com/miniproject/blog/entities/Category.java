@@ -12,10 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-
 @Entity
 @Table(name="categories")
 public class Category {

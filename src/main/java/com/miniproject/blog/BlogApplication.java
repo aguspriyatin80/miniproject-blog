@@ -14,12 +14,6 @@ import com.miniproject.blog.config.AppConstants;
 import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.repositories.RoleRepo;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
-
 @SpringBootApplication
 public class BlogApplication implements CommandLineRunner{
 

@@ -1,7 +1,6 @@
 package com.miniproject.blog.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -13,7 +12,6 @@ import com.miniproject.blog.config.AppConstants;
 import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.entities.User;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
-import com.miniproject.blog.payloads.RegisterRequest;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.RoleRepo;
 import com.miniproject.blog.repositories.UserRepo;
