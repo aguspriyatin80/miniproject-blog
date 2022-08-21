@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO registerNewUser(RegisterRequest registerRequest) {
-		User user = this.modelMapper.map(registerRequest, User.class);
+	public UserDTO registerNewUser(UserDTO userDto) {
+		User user = this.modelMapper.map(userDto, User.class);
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 		
 		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
