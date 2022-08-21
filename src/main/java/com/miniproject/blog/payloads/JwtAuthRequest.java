@@ -27,5 +27,10 @@ public class JwtAuthRequest {
 		this.username = username;
 		this.password = password;
 	}
+
+	public JwtAuthRequest() {
+		super();
+	}
 		
+	
 }

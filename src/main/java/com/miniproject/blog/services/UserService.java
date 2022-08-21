@@ -2,12 +2,13 @@ package com.miniproject.blog.services;
 
 import java.util.List;
 
+import com.miniproject.blog.payloads.RegisterRequest;
 import com.miniproject.blog.payloads.UserDTO;
 
 public interface UserService {
 
 	// register
-	UserDTO registerNewUser(UserDTO register);
+	UserDTO registerNewUser(RegisterRequest register);
 	
 	
 	// create user

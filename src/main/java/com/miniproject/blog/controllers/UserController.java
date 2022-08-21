@@ -39,7 +39,8 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(createdUser,HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/users")	 
+	@GetMapping("/users")
+	@PreAuthorize("hasRole('NORMAL') or hasRole('ADMIN')")
 	ResponseEntity<List<UserDTO>> getUsers(){
 		List<UserDTO> users = this.userService.getUsers();
 		return ResponseEntity.ok(users);
@@ -59,7 +60,7 @@ public class UserController {
 	}
 		
 	@DeleteMapping("/users/{userId}")
-	@PreAuthorize("hasRole('ADMIN')")
+//	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<ErrorResponse> deleteUser(@PathVariable("userId") Integer id){
 		this.userService.deleteUser(id);	
 		return new ResponseEntity<ErrorResponse>(new ErrorResponse("user with id = " + id + " deleted succesfully", true), HttpStatus.OK);
