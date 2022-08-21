@@ -29,7 +29,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="users")
+@Table(name = "\"User\"")
 public class User implements UserDetails{
 
 	@Id
@@ -55,9 +55,10 @@ public class User implements UserDetails{
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
             )
+	private Set<Role> roles = new HashSet<>();
 //	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id"))	
-    private Set<Role> roles = new HashSet<>();
+    
 
 	public User(Integer id, String name, String email, String password, String about, List<Post> posts,
 			Set<Role> roles) {
