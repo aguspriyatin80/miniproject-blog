@@ -66,10 +66,7 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public PostResponse getPostsByUser(Integer userId, Integer pageNumber, Integer pageSize) {
-//		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));		
-//		List<Post> posts = this.postRepo.findByUser(user);
-		
+	public PostResponse getPostsByUser(Integer userId, Integer pageNumber, Integer pageSize) {	
 		Pageable p = PageRequest.of(pageNumber, pageSize);
 		
 		Page<Post> pagePost = this.postRepo.findByUserId(userId, p);
@@ -129,7 +126,11 @@ public class PostServiceImpl implements PostService{
 	public PostDTO updatePost(PostDTO postDto, Integer postId) {
 		Post post = this.postRepo.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post", "Post Id", postId));
 		post.setTitle(postDto.getTitle());
-		post.setImageName(postDto.getImageName());
+		if(postDto.getImageName() == null) {
+			post.setImageName("default.png");
+		} else {
+			post.setImageName(postDto.getImageName());
+		}
 		post.setContent(postDto.getContent());
 		Post updatedPost = this.postRepo.save(post);
 		return this.modelMapper.map(updatedPost, PostDTO.class);
