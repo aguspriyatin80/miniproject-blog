@@ -1,15 +1,9 @@
 package com.miniproject.blog.controllers;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import com.miniproject.blog.entities.User;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/rest-client")
 public class RestClient {
 
 	private static final String URL = "http://localhost:9090/api/v1/users";
@@ -39,12 +33,12 @@ public class RestClient {
 	}
 	
 	@GetMapping("/users/{id}")
-	private ResponseEntity<String> getSingleUser(@PathVariable final int id) {
+	private ResponseEntity<String> getSingleUser(@PathVariable int id) {
         String user = restTemplate.getForObject(URL+"/"+id, String.class, id);        
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 	@PostMapping("/users")
-	public ResponseEntity<User> create(@RequestBody final User newUser) {
+	public ResponseEntity<User> create(@RequestBody User newUser) {
 		User createdUser = restTemplate.postForObject(URL, newUser, User.class);
 		return new ResponseEntity<>(createdUser,HttpStatus.OK);
 	}
