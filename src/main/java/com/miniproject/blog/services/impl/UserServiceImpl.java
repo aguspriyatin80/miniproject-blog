@@ -91,5 +91,5 @@ public class UserServiceImpl implements UserService {
 		return this.modelMapper.map(newUser, UserDTO.class);
 	}
 
-	
+
 }

@@ -9,4 +9,6 @@ import com.miniproject.blog.entities.User;
 public interface UserRepo extends JpaRepository<User, Integer>{
 
 	Optional<User> findByEmail(String email);
+		
+	Boolean existsByEmail(String email);
 }

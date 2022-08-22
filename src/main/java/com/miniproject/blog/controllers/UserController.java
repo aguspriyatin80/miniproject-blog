@@ -33,10 +33,15 @@ public class UserController {
 	UserRepo userRepo;
 	
 	@PostMapping("/users")
-	public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
-		UserDTO createdUser = this.userService.createUser(userDTO);
-		System.out.println(createdUser.toString());    
-		return new ResponseEntity<UserDTO>(createdUser,HttpStatus.CREATED);
+	public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO) throws Exception{
+					
+	 if (userRepo.existsByEmail(userDTO.getEmail())){
+            return new ResponseEntity<>("Error: Email already exist!", HttpStatus.CONFLICT);              
+      } else {
+    	  UserDTO createdUser = this.userService.createUser(userDTO);
+    	  return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+      }
+				
 	}
 	
 	@GetMapping("/users")

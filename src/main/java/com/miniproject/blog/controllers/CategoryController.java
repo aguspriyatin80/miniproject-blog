@@ -21,6 +21,7 @@ import com.miniproject.blog.config.AppConstants;
 import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.ErrorResponse;
 import com.miniproject.blog.payloads.SearchDTO;
+import com.miniproject.blog.repositories.CategoryRepo;
 import com.miniproject.blog.services.impl.CategoryServiceImpl;
 
 @RestController
@@ -30,10 +31,16 @@ public class CategoryController {
 	@Autowired
     CategoryServiceImpl categoryService;
 	
+	@Autowired
+	CategoryRepo categoryRepo;
+	
     //create	
 	@PostMapping("/categories")
-	private ResponseEntity<CategoryDTO> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO){
+	private ResponseEntity<?> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO){
           CategoryDTO newCategory = this.categoryService.createCategory(categoryDTO);
+          if (categoryRepo.existsByCategoryTitle(categoryDTO.getCategoryTitle())){
+              return new ResponseEntity<>("Error: Category Title already exist!", HttpStatus.CONFLICT);              
+            }
           return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
 
     }

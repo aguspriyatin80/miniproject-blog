@@ -21,4 +21,5 @@ public interface CategoryRepo extends JpaRepository<Category,Integer> {
 	// DERIVED QUERY
 //	List<Category> findByCategoryTitleIgnoreCaseContaining(String keyword);
 	
+	Boolean existsByCategoryTitle(String name);
 }

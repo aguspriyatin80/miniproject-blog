@@ -17,6 +17,7 @@ import com.miniproject.blog.exceptions.ApiException;
 import com.miniproject.blog.payloads.JwtAuthRequest;
 import com.miniproject.blog.payloads.RegisterRequest;
 import com.miniproject.blog.payloads.UserDTO;
+import com.miniproject.blog.repositories.UserRepo;
 import com.miniproject.blog.security.JwtAuthResponse;
 import com.miniproject.blog.security.JwtTokenHelper;
 import com.miniproject.blog.services.UserService;
@@ -36,6 +37,9 @@ public class AuthController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserRepo userRepo;
 	
 	@PostMapping("/login") 
 	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception{
@@ -62,10 +66,15 @@ public class AuthController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<UserDTO> registerUser(@RequestBody RegisterRequest req){
-		UserDTO registeredUser = this.userService.registerNewUser(req);
+	public ResponseEntity<?> registerUser(@RequestBody RegisterRequest req){
 		
-		return new ResponseEntity<UserDTO>(registeredUser,HttpStatus.CREATED);
+		if (userRepo.existsByEmail(req.getEmail())){
+		    return new ResponseEntity<>("Error: Email already exist!", HttpStatus.CONFLICT);              
+		} else {
+		  UserDTO createdUser = this.userService.registerNewUser(req);
+		  return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+		}
+	
 	}
 	
 }
