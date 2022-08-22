@@ -9,8 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 import com.miniproject.blog.config.AppConstants;
+import com.miniproject.blog.controllers.RestClient;
 import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.repositories.RoleRepo;
 
@@ -30,6 +32,11 @@ public class BlogApplication implements CommandLineRunner{
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
+	}
+	
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 
 	@Override

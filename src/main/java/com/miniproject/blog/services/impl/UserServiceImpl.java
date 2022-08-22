@@ -9,9 +9,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.miniproject.blog.config.AppConstants;
+import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.entities.User;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
+import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.RegisterRequest;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.RoleRepo;
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO createUser(UserDTO userDTO) {
 		User user = this.modelMapper.map(userDTO, User.class);
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         User addedUser = this.userRepo.save(user);
         return this.modelMapper.map(addedUser, UserDTO.class);
 	}
@@ -55,10 +58,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO updateUser(UserDTO userDTO, Integer userId) {
-		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));
-		this.modelMapper.map(userDTO, user);
+	public UserDTO updateUser(UserDTO userDto, Integer userId) {
+		
+		User user = this.userRepo.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
+
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		user.setAbout(userDto.getAbout());
+		
 		User updatedUser = this.userRepo.save(user);
+
 		return this.modelMapper.map(updatedUser, UserDTO.class);
 	}
 

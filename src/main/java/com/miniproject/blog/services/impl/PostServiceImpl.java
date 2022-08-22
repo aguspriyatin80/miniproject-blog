@@ -121,7 +121,6 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	public void deletePost(Integer postId) {
-		// TODO Auto-generated method stub
 		Post post = this.postRepo.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Post Id", postId));
 		this.postRepo.delete(post);
 	}
@@ -129,7 +128,6 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public PostDTO updatePost(PostDTO postDto, Integer postId) {
 		Post post = this.postRepo.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post", "Post Id", postId));
-//		this.modelMapper.map(postDto, post);
 		post.setTitle(postDto.getTitle());
 		post.setImageName(postDto.getImageName());
 		post.setContent(postDto.getContent());

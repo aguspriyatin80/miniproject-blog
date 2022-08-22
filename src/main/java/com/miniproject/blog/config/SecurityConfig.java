@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String[] PUBLIC_URLS = {
 			"/api/v1/auth/**",
+			"/api/v1/users/**",
 			"/v3/api-docs",
 			"/v2/api-docs",
 			"/swagger-resources/**",
@@ -50,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.disable()
 		.authorizeHttpRequests()
 		.antMatchers(PUBLIC_URLS).permitAll()
+		.antMatchers(HttpMethod.GET).permitAll()
 		.anyRequest()
 		.authenticated()
 		.and()
