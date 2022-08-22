@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import com.miniproject.blog.config.AppConstants;
-import com.miniproject.blog.controllers.RestClient;
 import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.repositories.RoleRepo;
 

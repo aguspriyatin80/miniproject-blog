@@ -9,11 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.miniproject.blog.config.AppConstants;
-import com.miniproject.blog.entities.Category;
 import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.entities.User;
 import com.miniproject.blog.exceptions.ResourceNotFoundException;
-import com.miniproject.blog.payloads.CategoryDTO;
 import com.miniproject.blog.payloads.RegisterRequest;
 import com.miniproject.blog.payloads.UserDTO;
 import com.miniproject.blog.repositories.RoleRepo;

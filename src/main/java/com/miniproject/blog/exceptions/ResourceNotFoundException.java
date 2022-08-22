@@ -1,6 +1,5 @@
 package com.miniproject.blog.exceptions;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class ResourceNotFoundException extends RuntimeException {
 
+	private static final long serialVersionUID = 1L;
 	String resourceName;
 	String fieldName;
 	int fieldValue;
