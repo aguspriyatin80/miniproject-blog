@@ -35,60 +35,60 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDTO createUser(UserDTO userDTO) {
-		User user = this.modelMapper.map(userDTO, User.class);
-		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-        User addedUser = this.userRepo.save(user);
-        return this.modelMapper.map(addedUser, UserDTO.class);
+		User user = modelMapper.map(userDTO, User.class);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User addedUser = userRepo.save(user);
+        return modelMapper.map(addedUser, UserDTO.class);
 	}
 
 	@Override
 	public List<UserDTO> getUsers() {
-		List<User> users = this.userRepo.findAll();
-		List<UserDTO> userDtos = users.stream().map((u)->this.modelMapper.map(u, UserDTO.class)).collect(Collectors.toList());
+		List<User> users = userRepo.findAll();
+		List<UserDTO> userDtos = users.stream().map((u)->modelMapper.map(u, UserDTO.class)).collect(Collectors.toList());
 		return userDtos;
 	}
 
 	@Override
 	public UserDTO getUser(Integer userId) {
-		User user = this.userRepo.findById(userId)
+		User user = userRepo.findById(userId)
 				.orElseThrow(()-> new ResourceNotFoundException("User", "User Id", userId));
-		return this.modelMapper.map(user, UserDTO.class);
+		return modelMapper.map(user, UserDTO.class);
 	}
 
 	@Override
 	public UserDTO updateUser(UserDTO userDto, Integer userId) {
 		
-		User user = this.userRepo.findById(userId)
+		User user = userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
 
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
-		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setAbout(userDto.getAbout());
 		
-		User updatedUser = this.userRepo.save(user);
+		User updatedUser = userRepo.save(user);
 
-		return this.modelMapper.map(updatedUser, UserDTO.class);
+		return modelMapper.map(updatedUser, UserDTO.class);
 	}
 
 	@Override
 	public void deleteUser(Integer userId) {
-		User user = this.userRepo.findById(userId)
+		User user = userRepo.findById(userId)
 				.orElseThrow(()->new ResourceNotFoundException("User", "User Id", userId));
-		this.userRepo.delete(user);
+		userRepo.delete(user);
 	}
 
 	@Override
 	public UserDTO registerNewUser(RegisterRequest req) {
-		User user = this.modelMapper.map(req, User.class);
-		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		User user = modelMapper.map(req, User.class);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		
-		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+		Role role = roleRepo.findById(AppConstants.NORMAL_USER).get();
 		
 		user.getRoles().add(role);
-		User newUser = this.userRepo.save(user);
+		User newUser = userRepo.save(user);
 		
-		return this.modelMapper.map(newUser, UserDTO.class);
+		return modelMapper.map(newUser, UserDTO.class);
 	}
 
 

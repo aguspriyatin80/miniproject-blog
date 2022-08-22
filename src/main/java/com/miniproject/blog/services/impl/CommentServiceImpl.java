@@ -27,18 +27,18 @@ public class CommentServiceImpl implements CommentService {
 	
 	@Override
 	public CommentDTO createComment(CommentDTO commentDto, Integer postId) {
-		Post post = this.postRepo.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post", "Post Id", postId)); 
-		Comment comment = this.modelMapper.map(commentDto,Comment.class);
+		Post post = postRepo.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post", "Post Id", postId)); 
+		Comment comment = modelMapper.map(commentDto,Comment.class);
 		comment.setPost(post);
-		Comment savedComment = this.commentRepo.save(comment);
-		return this.modelMapper.map(savedComment,CommentDTO.class);
+		Comment savedComment = commentRepo.save(comment);
+		return modelMapper.map(savedComment,CommentDTO.class);
 	}
 
 	@Override
 	public void deleteComment(Integer commentId) {
 
-		Comment comment = this.commentRepo.findById(commentId).orElseThrow(()->new ResourceNotFoundException("Comment", "Comment Id", commentId));
-		this.commentRepo.delete(comment);
+		Comment comment = commentRepo.findById(commentId).orElseThrow(()->new ResourceNotFoundException("Comment", "Comment Id", commentId));
+		commentRepo.delete(comment);
 		
 	}
 

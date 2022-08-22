@@ -43,10 +43,10 @@ public class AuthController {
 	
 	@PostMapping("/login") 
 	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception{
-		this.authenticate(request.getUsername(), request.getPassword());		
-		UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
+		authenticate(request.getUsername(), request.getPassword());		
+		UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
 		
-		String token = this.jwtTokenHelper.generateToken(userDetails);
+		String token = jwtTokenHelper.generateToken(userDetails);
 		
 		JwtAuthResponse response = new JwtAuthResponse();
 		response.setToken(token);
@@ -58,7 +58,7 @@ public class AuthController {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
 		
 		try {
-			this.authenticationManager.authenticate(authenticationToken);
+			authenticationManager.authenticate(authenticationToken);
 		} catch(BadCredentialsException e) {
 			System.out.println("Invalid dentials");
 			throw new ApiException("Invalid username or password");
@@ -71,10 +71,9 @@ public class AuthController {
 		if (userRepo.existsByEmail(req.getEmail())){
 		    return new ResponseEntity<>("Error: Email already exist!", HttpStatus.CONFLICT);              
 		} else {
-		  UserDTO createdUser = this.userService.registerNewUser(req);
+		  UserDTO createdUser = userService.registerNewUser(req);
 		  return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-		}
-	
+		}	
 	}
 	
 }

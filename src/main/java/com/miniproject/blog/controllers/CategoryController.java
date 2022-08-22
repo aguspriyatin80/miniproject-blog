@@ -37,7 +37,7 @@ public class CategoryController {
     //create	
 	@PostMapping("/categories")
 	private ResponseEntity<?> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO){
-          CategoryDTO newCategory = this.categoryService.createCategory(categoryDTO);
+          CategoryDTO newCategory = categoryService.createCategory(categoryDTO);
           if (categoryRepo.existsByCategoryTitle(categoryDTO.getCategoryTitle())){
               return new ResponseEntity<>("Error: Category Title already exist!", HttpStatus.CONFLICT);              
             }
@@ -51,35 +51,35 @@ public class CategoryController {
 			@RequestParam(value="pageNumber", defaultValue=AppConstants.PAGE_NUMBER, required=false) int pageNumber,
 			@RequestParam(value="pageSize", defaultValue=AppConstants.PAGE_SIZE, required=false) int pageSize)
 	{
-		List<CategoryDTO> categories = this.categoryService.getCategories(pageNumber,pageSize);
+		List<CategoryDTO> categories = categoryService.getCategories(pageNumber,pageSize);
 		return ResponseEntity.ok(categories);
 	}
 	
 	// get one category
 	@GetMapping("/categories/{categoryId}")
 	public ResponseEntity<CategoryDTO> getCategory(@PathVariable ("categoryId") Integer id){
-		CategoryDTO categoryDto = this.categoryService.getCategory(id);
+		CategoryDTO categoryDto = categoryService.getCategory(id);
 		return new ResponseEntity<CategoryDTO>(categoryDto,HttpStatus.OK);
 	}
 	
 	// update category
 	@PutMapping("/categories/{categoryId}")
 	public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable("categoryId") Integer id){
-		CategoryDTO updatedCategory = this.categoryService.updateCategory(categoryDTO, id);
+		CategoryDTO updatedCategory = categoryService.updateCategory(categoryDTO, id);
 		return new ResponseEntity<CategoryDTO>(updatedCategory,HttpStatus.OK);
 	}
 	
 	// delete
 	@DeleteMapping("/categories/{categoryId}")
 	public ResponseEntity<ErrorResponse> deleteCategory(@Valid @PathVariable("categoryId") Integer id) {
-		this.categoryService.deleteCategory(id);
+		categoryService.deleteCategory(id);
 		return new ResponseEntity<ErrorResponse>(new ErrorResponse("category with id = " + id + " deleted succesfully", true), HttpStatus.OK);
 	}
 	
 	// search category by name
 	@PostMapping("/categories/search/name")
 	public ResponseEntity<List<CategoryDTO>> searchPostsByTitle(@RequestBody SearchDTO searchDto, String keywords){
-		List<CategoryDTO> result = this.categoryService.searchPosts(searchDto.getKeyword());
+		List<CategoryDTO> result = categoryService.searchPosts(searchDto.getKeyword());
 		return new ResponseEntity<List<CategoryDTO>>(result,HttpStatus.OK);
 	}
 	

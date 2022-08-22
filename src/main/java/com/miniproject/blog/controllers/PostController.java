@@ -48,7 +48,7 @@ public class PostController {
 	@PostMapping("/users/{userId}/categories/{categoryId}/posts")
 	public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDto, @PathVariable Integer userId, @PathVariable Integer categoryId){
 		
-		PostDTO createPost = this.postService.createPost(postDto, userId, categoryId); 
+		PostDTO createPost = postService.createPost(postDto, userId, categoryId); 
 		return new ResponseEntity<PostDTO>(createPost,HttpStatus.CREATED); 
 	}
 	
@@ -57,13 +57,13 @@ public class PostController {
 		@RequestParam(value="pageNumber", defaultValue=AppConstants.PAGE_NUMBER, required=false) int pageNumber,
 		@RequestParam(value="pageSize", defaultValue=AppConstants.PAGE_SIZE, required=false) int pageSize)		
 	{
-		PostResponse postsByUser = this.postService.getPostsByUser(id, pageNumber, pageSize);
+		PostResponse postsByUser = postService.getPostsByUser(id, pageNumber, pageSize);
 		return new ResponseEntity<PostResponse>(postsByUser, HttpStatus.OK);
 	}
 	
 	@GetMapping("/categories/{categoryId}/posts")
 	public ResponseEntity<List<PostDTO>> getPostsByCategory(@PathVariable("categoryId") Integer id){
-		List<PostDTO> postsByCategory = this.postService.getPostsByCategory(id);
+		List<PostDTO> postsByCategory = postService.getPostsByCategory(id);
 		return new ResponseEntity<List<PostDTO>>(postsByCategory, HttpStatus.OK);
 	}
 	
@@ -75,25 +75,25 @@ public class PostController {
 		@RequestParam(value="sortDir", defaultValue=AppConstants.SORT_DIR, required=false) String sortDir)
 
 	{
-		PostResponse postResponse = this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDir);
+		PostResponse postResponse = postService.getAllPosts(pageNumber, pageSize, sortBy, sortDir);
 		return new ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
 	}
 	
 	@GetMapping("/posts/{postId}")
 	public ResponseEntity<PostDTO> getPostById(@PathVariable Integer postId){		
-		PostDTO postDto = this.postService.getPost(postId);
+		PostDTO postDto = postService.getPost(postId);
 		return new ResponseEntity<PostDTO>(postDto,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/posts/{postId}")
 	public ErrorResponse deletePostBydId(@PathVariable Integer postId){		
-		this.postService.deletePost(postId);
+		postService.deletePost(postId);
 		return new ErrorResponse("Post with id : "+ postId + " was deleted", true);
 	}
 	
 	@PutMapping("/posts/{postId}")
 	public ResponseEntity<PostDTO> updatePostBydId(@RequestBody PostDTO postDto, @PathVariable Integer postId){		
-		PostDTO updatePost = this.postService.updatePost(postDto, postId);
+		PostDTO updatePost = postService.updatePost(postDto, postId);
 		return new ResponseEntity<PostDTO>(updatePost,HttpStatus.OK);
 	}
 	
@@ -102,11 +102,11 @@ public class PostController {
 	public ResponseEntity<PostDTO> uploadPostImage(
 			@RequestParam("image") MultipartFile image,
 			@PathVariable("postId") Integer postId) throws IOException{
-		PostDTO postDto = this.postService.getPost(postId);
-		String fileName = this.fileService.uploadImage(path, image);
+		PostDTO postDto = postService.getPost(postId);
+		String fileName = fileService.uploadImage(path, image);
 		
 		postDto.setImageName(fileName);
-		PostDTO updatePost = this.postService.updatePost(postDto, postId);
+		PostDTO updatePost = postService.updatePost(postDto, postId);
 		
 		return new ResponseEntity<PostDTO>(updatePost,HttpStatus.OK);
 		
@@ -115,7 +115,7 @@ public class PostController {
 	//method to serve file
 	@GetMapping(value="/posts/image/{imageName}", produces=MediaType.IMAGE_JPEG_VALUE)
 	public void downloadImage(@PathVariable("imageName") String imageName, HttpServletResponse response) throws IOException {
-		InputStream resource = this.fileService.getResource(path, imageName);
+		InputStream resource = fileService.getResource(path, imageName);
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		StreamUtils.copy(resource, response.getOutputStream());
 	}

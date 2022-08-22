@@ -38,7 +38,7 @@ public class UserController {
 	 if (userRepo.existsByEmail(userDTO.getEmail())){
             return new ResponseEntity<>("Error: Email already exist!", HttpStatus.CONFLICT);              
       } else {
-    	  UserDTO createdUser = this.userService.createUser(userDTO);
+    	  UserDTO createdUser = userService.createUser(userDTO);
     	  return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
       }
 				
@@ -47,27 +47,27 @@ public class UserController {
 	@GetMapping("/users")
 //	@PreAuthorize("hasRole('NORMAL') or hasRole('ADMIN')")
 	ResponseEntity<List<UserDTO>> getUsers(){
-		List<UserDTO> users = this.userService.getUsers();
+		List<UserDTO> users = userService.getUsers();
 		return ResponseEntity.ok(users);
 	}
 	
 	@GetMapping("/users/{userId}")
 	public ResponseEntity<UserDTO> getUser(@PathVariable("userId") Integer id){
-		UserDTO userDto = this.userService.getUser(id);		
+		UserDTO userDto = userService.getUser(id);		
 		return new ResponseEntity<UserDTO>(userDto,HttpStatus.OK);
 	}
 	
 	@PutMapping("/users/{userId}")
 	@PreAuthorize("hasRole('NORMAL') or hasRole('ADMIN')")
 	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDto, @PathVariable("userId") Integer id){
-		UserDTO updatedUser = this.userService.updateUser(userDto,id);
+		UserDTO updatedUser = userService.updateUser(userDto,id);
 		return new ResponseEntity<UserDTO>(updatedUser,HttpStatus.OK);
 	}
 		
 	@DeleteMapping("/users/{userId}")
 //	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<ErrorResponse> deleteUser(@PathVariable("userId") Integer id){
-		this.userService.deleteUser(id);	
+		userService.deleteUser(id);	
 		return new ResponseEntity<ErrorResponse>(new ErrorResponse("user with id = " + id + " deleted succesfully", true), HttpStatus.OK);
 	}
 }

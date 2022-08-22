@@ -28,9 +28,9 @@ public class CategoryServiceImpl implements CategoryService{
 
 	 @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-        Category category = this.modelMapper.map(categoryDTO, Category.class);
-        Category addedCategory = this.categoryRepo.save(category);
-        return this.modelMapper.map(addedCategory, CategoryDTO.class);
+        Category category = modelMapper.map(categoryDTO, Category.class);
+        Category addedCategory = categoryRepo.save(category);
+        return modelMapper.map(addedCategory, CategoryDTO.class);
     }
 
 	@Override
@@ -38,48 +38,48 @@ public class CategoryServiceImpl implements CategoryService{
 		
 		Pageable p = PageRequest.of(pageNumber, pageSize);
 		
-		Page<Category> pageCategories = this.categoryRepo.findAll(p);
+		Page<Category> pageCategories = categoryRepo.findAll(p);
 		
 		List<Category> categories = pageCategories.getContent();
 		
-		List<CategoryDTO> categoryDtos = categories.stream().map((cat)->this.modelMapper.map(cat, CategoryDTO.class)).collect(Collectors.toList());
+		List<CategoryDTO> categoryDtos = categories.stream().map((cat)->modelMapper.map(cat, CategoryDTO.class)).collect(Collectors.toList());
 		return categoryDtos;
 	}
 
 	@Override
 	public CategoryDTO getCategory(Integer categoryId) {
-		Category category = this.categoryRepo.findById(categoryId)
+		Category category = categoryRepo.findById(categoryId)
 				.orElseThrow(()-> new ResourceNotFoundException("Category", "Category Id", categoryId));
-		return this.modelMapper.map(category, CategoryDTO.class);
+		return modelMapper.map(category, CategoryDTO.class);
 
 	}
 
 	@Override
 	public CategoryDTO updateCategory(CategoryDTO categoryDto, Integer categoryId) {
 		
-		Category cat = this.categoryRepo.findById(categoryId)
+		Category cat = categoryRepo.findById(categoryId)
 				.orElseThrow(() -> new ResourceNotFoundException("Category ", "Category Id", categoryId));
 
 		cat.setCategoryTitle(categoryDto.getCategoryTitle());
 		cat.setCategoryDescription(categoryDto.getCategoryDescription());
 
-		Category updatedcat = this.categoryRepo.save(cat);
+		Category updatedcat = categoryRepo.save(cat);
 
-		return this.modelMapper.map(updatedcat, CategoryDTO.class);
+		return modelMapper.map(updatedcat, CategoryDTO.class);
 	}
 
 	@Override
 	public void deleteCategory(Integer categoryId) {
-		Category category = this.categoryRepo.findById(categoryId)
+		Category category = categoryRepo.findById(categoryId)
 				.orElseThrow(()-> new ResourceNotFoundException("Category", "Category Id", categoryId));
-		this.categoryRepo.delete(category);
+		categoryRepo.delete(category);
 	}
 
 	@Override
 	public List<CategoryDTO> searchPosts(String keyword) {
-//		List<Category> categories = this.categoryRepo.findByCategoryTitleIgnoreCaseContaining(keyword);
-		List<Category> categories = this.categoryRepo.findCategoryByNameLike("%" + keyword + "%");
-		List<CategoryDTO>  categoryDtos = categories.stream().map((cat)-> this.modelMapper.map(cat, CategoryDTO.class)).collect(Collectors.toList());
+//		List<Category> categories = categoryRepo.findByCategoryTitleIgnoreCaseContaining(keyword);
+		List<Category> categories = categoryRepo.findCategoryByNameLike("%" + keyword + "%");
+		List<CategoryDTO>  categoryDtos = categories.stream().map((cat)-> modelMapper.map(cat, CategoryDTO.class)).collect(Collectors.toList());
 		return categoryDtos;
 	}
 
