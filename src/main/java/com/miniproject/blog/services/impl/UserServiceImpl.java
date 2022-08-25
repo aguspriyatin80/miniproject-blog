@@ -1,6 +1,7 @@
 package com.miniproject.blog.services.impl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -91,5 +92,33 @@ public class UserServiceImpl implements UserService {
 		return modelMapper.map(newUser, UserDTO.class);
 	}
 
+	@Override
+	public void assignUserRole(Integer userId, Integer roleId) {
+		  User user  = userRepo.findById(userId).orElse(null);
+		    Role role = roleRepo.findById(roleId).orElse(null);
+		   Set<Role> userRoles = user.getRoles();
+		   userRoles.add(role);
+		   user.setRoles(userRoles);
+		   userRepo.save(user);		
+	}
 
+	@Override
+	public void unAssignUserRole(Integer userId, Integer roleId) {
+		User user  = userRepo.findById(userId).get();
+	    user.getRoles().removeIf(x -> x.getId() == roleId);
+	    userRepo.save(user);
+		
+	}
+	
+	@Override
+	public Set<Role> getUserRoles(User user){
+		return user.getRoles();
+	}
+
+	@Override
+	public List<Role> getUserNotRole(User user) {
+		return roleRepo.getUserNotRoles(user.getId());
+	}
+	
+	
 }

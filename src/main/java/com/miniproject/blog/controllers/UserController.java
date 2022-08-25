@@ -1,9 +1,11 @@
 package com.miniproject.blog.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.miniproject.blog.entities.Role;
 import com.miniproject.blog.payloads.ErrorResponse;
 import com.miniproject.blog.payloads.UserDTO;
+import com.miniproject.blog.repositories.RoleRepo;
 import com.miniproject.blog.repositories.UserRepo;
 import com.miniproject.blog.services.impl.UserServiceImpl;
 
@@ -29,6 +33,9 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 		
+	@Autowired
+	RoleRepo roleRepo;
+
 	@Autowired
 	UserRepo userRepo;
 	
@@ -70,4 +77,19 @@ public class UserController {
 		userService.deleteUser(id);	
 		return new ResponseEntity<ErrorResponse>(new ErrorResponse("user with id = " + id + " deleted succesfully", true), HttpStatus.OK);
 	}
+	
+	@RequestMapping("/users/assign/role/{userId}/{roleId}")
+	public void assigUserRole(
+			@PathVariable("userId") Integer uId, 
+			@PathVariable("roleId") Integer rId){
+		userService.assignUserRole(uId, rId);
+		
+	}
+	
+	@RequestMapping("/users/unassign/role/{userId}/{roleId}")
+	public void unassignUserRole(@PathVariable("userId") Integer uId, @PathVariable("roleId") Integer rId){
+		userService.unAssignUserRole(uId, rId);
+		
+	}
+	
 }
