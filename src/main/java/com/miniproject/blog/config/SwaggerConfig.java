@@ -51,7 +51,7 @@ public class SwaggerConfig {
 	private ApiInfo getInfo() {
 		return new ApiInfo(
 				"Mini Project : Blog APIS", 
-				"Blog APIS Documentation Developed by Agus Priyatin", 
+				"Blog APIS Documentation Developed by Agus Priyatin, Techstack : Spring Boot, Postgresql", 
 				"1.0",
 				"Terms of Service", 
 				new Contact("Agus", "http://aguspriyatin.wordpress.com", "aguspriyatin80@gmail.com"), 
